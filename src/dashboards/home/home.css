@@ -1,0 +1,58 @@
+.primary-title{
+    color: white;
+}
+.home-container{
+    background-color: #212630;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+
+}
+.principal-container{
+    margin:20px
+    
+}
+.matches-container{
+   display: flex;
+   margin: 120px;
+   height: 100vh;
+}
+
+.match-card{
+
+    max-width: 360px;
+    margin: 20px;
+    height: 460px;
+}
+.images-container{
+    display: flex;
+    justify-content: space-around;
+    margin:10px
+    
+}
+.team-image{
+    width: 70px;
+    height: 85px;
+}
+.bet-form{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.form-container{
+    margin-top: 40px;
+}
+@media screen and (max-width:2100px) {
+    .matches-container{
+        display: grid;
+        grid-template-columns: 1fr;
+        height: 100%;
+    }
+    .match-card{
+        max-width: 360px;
+        margin: 10px;
+        height: 490px;
+    }
+}
