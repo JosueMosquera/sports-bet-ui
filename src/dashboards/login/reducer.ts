@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import { NewUser, User } from "../../types/user";
 import { api } from "../../utils/axios";
+import Swal from "sweetalert2";
 
 type Login = {
   type: "login";
@@ -102,9 +103,14 @@ export const useUserReducer = (): ReducerValue => {
       userName: state.registerUserName,
       password: state.registerUserPassword,
     });
+
     dispatch({
       type: "register",
       payload: { newUser: data.newUser },
+    });
+    Swal.fire({
+      title: "Registro exitoso puede iniciar sesión.",
+      icon: "success",
     });
   };
 

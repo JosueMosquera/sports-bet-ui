@@ -39,6 +39,7 @@ const Register = () => {
             id="outlined-basic"
             label="password"
             variant="outlined"
+            type="password"
             name="registerUserPassword"
             required
             className="form-input"

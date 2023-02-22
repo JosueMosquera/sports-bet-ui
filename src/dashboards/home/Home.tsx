@@ -1,16 +1,22 @@
 import {
   Alert,
   AlertTitle,
+  AppBar,
+  Box,
   Button,
   Card,
   CardContent,
   FormControl,
   FormControlLabel,
+  IconButton,
   Radio,
   RadioGroup,
   TextField,
+  Toolbar,
+  Typography,
 } from "@mui/material";
 import { format } from "date-fns";
+import MenuIcon from '@mui/icons-material/Menu';
 import { es } from "date-fns/locale";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -33,24 +39,38 @@ const Home = () => {
   } = useCreditsReducer();
 
   return (
-    <div className="home-container">
-      {user !== null || user !== undefined ? (
-        <>
-          <div className="principal-container">
-            <h4 className="primary-title"> Bienvenido {user?.userEmail}</h4>
-            <h4 className="primary-title">
-              Creditos Disponibles:{user?.availableCredits}
-            </h4>
-            <Button
+    <>
+     <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+        
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <h5 className="primary-title"> Bienvenido {user?.userEmail}  Creditos Disponibles:{user?.availableCredits}</h5>
+           
+            
+          </Typography>
+          <Button
               onClick={() => {
                 navigate("/login");
                 localStorage.removeItem("user");
               }}
               type="button"
+              color="error"
               variant="contained"
             >
               Cerrar Sesión
             </Button>
+        </Toolbar>
+      </AppBar>
+    </Box>
+    <div className="home-container">
+      
+      {user !== null || user !== undefined ? (
+        <>
+       
+          <div className="principal-container">
+   
+           
             <div className="add-credits-container">
               <form
                 className="form-container"
@@ -120,6 +140,11 @@ const Home = () => {
                               alt="team-a"
                               className="team-image"
                             />
+                                <img
+                            src='https://st2.depositphotos.com/2877797/8963/v/600/depositphotos_89636676-stock-illustration-symbol-competition-vs-vector-illustration.jpg'
+                            alt="vs"
+                            className="team-image"
+                          />
                             <img
                               src={match.teamBimage}
                               alt="team-b"
@@ -240,6 +265,11 @@ const Home = () => {
                             className="team-image"
                           />
                           <img
+                         src='https://st2.depositphotos.com/2877797/8963/v/600/depositphotos_89636676-stock-illustration-symbol-competition-vs-vector-illustration.jpg'
+                            alt="vs"
+                            className="team-image"
+                          />
+                          <img
                             src={prediction.match.teamBimage}
                             alt="team-b"
                             className="team-image"
@@ -338,6 +368,7 @@ const Home = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

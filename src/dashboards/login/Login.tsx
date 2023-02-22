@@ -38,6 +38,7 @@ const Login = () => {
             label="password"
             variant="outlined"
             name="loginUserPassword"
+            type="password"
             required
             className="form-input"
             onChange={(e) => changeInputValue(e.target.name, e.target.value)}
