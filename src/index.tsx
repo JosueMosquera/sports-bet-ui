@@ -8,6 +8,7 @@ import Register from "./dashboards/login/Register";
 import Login from "./dashboards/login/Login";
 
 import Home from "./dashboards/home/Home";
+import MyTransactions from "./dashboards/myTransactions";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/my-transactions",
+    element: <MyTransactions />,
   },
   {
     path: "/login",
