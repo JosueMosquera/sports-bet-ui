@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import { NewUser, User } from "../../types/user";
 import { api } from "../../utils/axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 type Login = {
   type: "login";
@@ -84,6 +85,7 @@ interface ReducerValue extends State {
 }
 export const useUserReducer = (): ReducerValue => {
   const [state, dispatch] = useReducer(reducer, initalState);
+  const navigate = useNavigate();
   const login = async () => {
     const { data } = await api.post("/auth/login", {
       email: state.loginUserEmail,
@@ -95,6 +97,12 @@ export const useUserReducer = (): ReducerValue => {
     });
     if (data.user !== undefined) {
       localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/");
+    } else {
+      Swal.fire({
+        title: "Credenciales incorrectas.",
+        icon: "error",
+      });
     }
   };
   const register = async () => {

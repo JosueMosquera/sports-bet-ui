@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { login, changeInputValue } = useUserReducer();
-  const navigate = useNavigate();
+
   return (
     <div className="login-container">
       <Box>
@@ -17,9 +17,6 @@ const Login = () => {
           onSubmit={(e) => {
             e.preventDefault();
             login();
-            setTimeout(() => {
-              navigate("/");
-            }, 1000);
           }}
         >
           <p className="primary-title">plataforma de apuestas deportivas</p>

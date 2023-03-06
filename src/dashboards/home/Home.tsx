@@ -139,6 +139,14 @@ const Home = () => {
                                 el resultado.
                               </Alert>
                             )}
+                            {match.isMatchFinished && (
+                              <Alert severity="info">
+                                <AlertTitle>El partido a finalizado</AlertTitle>
+                                si acerto se sumaran a sus creditos la ganancia
+                                acordada. puede ver el detalle en el menu de
+                                transacciones.
+                              </Alert>
+                            )}
                             <p>Tipo de apuesta: paga x{match.betOffer}</p>
                             <p>
                               {match.teamA} - {match.teamB}
