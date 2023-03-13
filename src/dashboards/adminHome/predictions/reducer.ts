@@ -1,6 +1,6 @@
 import { useReducer } from "react";
-import { NewUser, User } from "../../types/user";
-import { api } from "../../utils/axios";
+import { NewUser, User } from "../../../types/user";
+import { api } from "../../../utils/axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -79,54 +79,19 @@ const reducer = (state: State, action: ActionTypes) => {
   }
 };
 interface ReducerValue extends State {
-  login: () => void;
   register: () => void;
   changeInputValue: (field: string, value: any) => void;
 }
 export const useUserReducer = (): ReducerValue => {
   const [state, dispatch] = useReducer(reducer, initalState);
   const navigate = useNavigate();
-  const login = async () => {
-    try {
-      const { data } = await api.post("/auth/login", {
-        email: state.loginUserEmail,
-        password: state.loginUserPassword,
-      });
-      dispatch({
-        type: "login",
-        payload: { user: data.user },
-      });
-      if (data.user !== undefined) {
-        localStorage.setItem("user", JSON.stringify(data.user));
-        if (data.user.isAdmin) {
-          navigate("/admin-home");
-          Swal.fire({
-            title: "Bienvenido Administrador.",
-            icon: "success",
-          });
-        } else {
-          navigate("/");
-        }
-      } else {
-        Swal.fire({
-          title: "Credenciales incorrectas.",
-          icon: "error",
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      Swal.fire({
-        title: "No estas registrado.",
-        icon: "error",
-      });
-    }
-  };
+
   const register = async () => {
     const { data } = await api.post("/auth", {
       userEmail: state.registerUserEmail,
       userName: state.registerUserName,
       password: state.registerUserPassword,
-      isAdmin: false,
+      isAdmin: true,
     });
 
     dispatch({
@@ -148,10 +113,9 @@ export const useUserReducer = (): ReducerValue => {
       },
     });
   };
-  console.log(state.user);
+
   return {
     ...state,
-    login,
     register,
     changeInputValue,
   };

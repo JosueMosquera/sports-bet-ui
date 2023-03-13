@@ -41,7 +41,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const MyTransactions = () => {
   const { transactions } = useTransactionsReducer();
   const navigate = useNavigate();
-  console.log(transactions);
   return transactions.length > 0 ? (
     <>
       <Box sx={{ flexGrow: 1 }}>

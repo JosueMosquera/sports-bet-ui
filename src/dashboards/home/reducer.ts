@@ -4,6 +4,7 @@ import { api } from "../../utils/axios";
 import Swal from "sweetalert2";
 import { Match } from "../../types/matches";
 import { MatchPrediction } from "../../types/matchesPredictions";
+import { useNavigate } from "react-router-dom";
 type GetUser = {
   type: "get-user";
   payload: {
@@ -155,14 +156,16 @@ export const useCreditsReducer = (): ReducerValue => {
   const [state, dispatch] = useReducer(reducer, initalState);
   const user = localStorage.getItem("user");
   const parsedUser = user && JSON.parse(user);
-
+  const navigate = useNavigate();
   const getUser = async () => {
-    if (parsedUser) {
+    if (parsedUser && !parsedUser.isAdmin) {
       const { data } = await api.get(`/auth/${parsedUser.id}`);
       dispatch({
         type: "get-user",
         payload: { user: data },
       });
+    } else {
+      navigate("/login");
     }
   };
 
@@ -267,6 +270,10 @@ export const useCreditsReducer = (): ReducerValue => {
       await getMatchPredictions();
       await getUser();
     } catch (error) {
+      Swal.fire({
+        title: "creditos insuficientes para realizar la apuesta.",
+        icon: "error",
+      });
       console.error(error);
     }
   };

@@ -9,6 +9,11 @@ import Login from "./dashboards/login/Login";
 
 import Home from "./dashboards/home/Home";
 import MyTransactions from "./dashboards/myTransactions";
+import LoginAdmin from "./dashboards/login/LoginAdmin";
+import AdminHome from "./dashboards/adminHome";
+import TeamsAdmin from "./dashboards/adminHome/teams";
+import MatchesAdmin from "./dashboards/adminHome/matches";
+import AdminRegister from "./dashboards/adminHome/predictions";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -24,6 +29,26 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/login-admin",
+    element: <LoginAdmin />,
+  },
+  {
+    path: "/admin-home",
+    element: <AdminHome />,
+  },
+  {
+    path: "/admin-teams",
+    element: <TeamsAdmin />,
+  },
+  {
+    path: "/admin-matches",
+    element: <MatchesAdmin />,
+  },
+  {
+    path: "/admin-register",
+    element: <AdminRegister />,
   },
   {
     path: "/register",

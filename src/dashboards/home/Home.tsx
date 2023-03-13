@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Alert,
   AlertTitle,
@@ -17,14 +18,16 @@ import {
   Typography,
 } from "@mui/material";
 import { format } from "date-fns";
-import MenuIcon from "@mui/icons-material/Menu";
 import { es } from "date-fns/locale";
-import React from "react";
+//@ts-ignore
+import CreditCardInput from "react-credit-card-input";
 import { useNavigate } from "react-router-dom";
 import "./home.css";
 import { useCreditsReducer } from "./reducer";
 const Home = () => {
   const navigate = useNavigate();
+  const [value, setValue] = useState("");
+
   const {
     user,
     addCredits,
@@ -91,6 +94,8 @@ const Home = () => {
                   <h4 className="primary-title">Agregar Creditos</h4>
                   <TextField
                     id="outlined-basic"
+                    inputProps={{ min: 1, max: 5000 }}
+                    type="number"
                     label="monto"
                     name="ammount"
                     variant="outlined"
@@ -101,9 +106,12 @@ const Home = () => {
                     }
                     value={ammount}
                   />
-                  <TextField
+
+                  {/*   <TextField
                     id="outlined-basic"
-                    label="numero de tarjeta de debito o credito"
+                    label="Fecha de expiración de la tarjeta"
+                    inputProps={{ min: 0 }}
+                    type="number"
                     variant="outlined"
                     name="creditCardCode"
                     required
@@ -112,6 +120,47 @@ const Home = () => {
                       changeInputValue(e.target.name, e.target.value)
                     }
                     value={creditCardCode}
+                  />
+                  <TextField
+                    id="outlined-basic"
+                    label="3 digitos de seguridad de la tarjeta ver reverso de la tarjeta"
+                    inputProps={{ min: 0 }}
+                    type="number"
+                    variant="outlined"
+                    name="creditCardCode"
+                    required
+                    className="form-input"
+                    onChange={(e) =>
+                      changeInputValue(e.target.name, e.target.value)
+                    }
+                    value={creditCardCode}
+                  /> */}
+
+                  <p style={{ textAlign: "right", color: "white" }}>
+                    tarjeta de debito/credito
+                  </p>
+                  <CreditCardInput
+                    containerStyle={{ marginLeft: 30, marginRight: 30 }}
+                    cardCVCInputRenderer={({
+                      handleCardCVCChange,
+                      props,
+                    }: any) => <input {...props} />}
+                    cardExpiryInputRenderer={({
+                      handleCardExpiryChange,
+                      props,
+                    }: any) => <input {...props} />}
+                    cardNumberInputRenderer={({
+                      handleCardNumberChange,
+                      props,
+                    }: any) => (
+                      <input
+                        {...props}
+                        name={"creditCardCode"}
+                        onChange={(e) =>
+                          changeInputValue(e.target.name, e.target.value)
+                        }
+                      />
+                    )}
                   />
                   <Button type="submit" variant="contained">
                     Agregar Creditos
@@ -139,21 +188,14 @@ const Home = () => {
                                 el resultado.
                               </Alert>
                             )}
-                            {match.isMatchFinished && (
-                              <Alert severity="info">
-                                <AlertTitle>El partido a finalizado</AlertTitle>
-                                si acerto se sumaran a sus creditos la ganancia
-                                acordada. puede ver el detalle en el menu de
-                                transacciones.
-                              </Alert>
-                            )}
+
                             <p>Tipo de apuesta: paga x{match.betOffer}</p>
                             <p>
-                              {match.teamA} - {match.teamB}
+                              {match.teamA.name} - {match.teamB.name}
                             </p>
                             <div className="images-container">
                               <img
-                                src={match.teamAimage}
+                                src={match.teamA.teamImage}
                                 alt="team-a"
                                 className="team-image"
                               />
@@ -163,7 +205,7 @@ const Home = () => {
                                 className="team-image"
                               />
                               <img
-                                src={match.teamBimage}
+                                src={match.teamB.teamImage}
                                 alt="team-b"
                                 className="team-image"
                               />
@@ -223,20 +265,7 @@ const Home = () => {
                                         )
                                       }
                                     />
-                                    <TextField
-                                      id="outlined-basic"
-                                      label="numero de tarjeta de debito o credito"
-                                      variant="outlined"
-                                      name="betCreditCardCode"
-                                      required
-                                      className="form-input"
-                                      onChange={(e) =>
-                                        changeInputValue(
-                                          e.target.name,
-                                          e.target.value
-                                        )
-                                      }
-                                    />
+
                                     <Button type="submit" variant="contained">
                                       Registrar Apuesta
                                     </Button>
@@ -262,22 +291,40 @@ const Home = () => {
                               }
                             )}
                           </p>
-                          {prediction.match.isMatchStarted && (
+                          {prediction.match.isMatchStarted &&
+                          !prediction.match.isMatchFinished ? (
                             <Alert severity="warning">
                               <AlertTitle>El partido a comenzado</AlertTitle>
                               no se reciben mas apuestas, ni se puede cambiar el
                               resultado.
                             </Alert>
-                          )}
+                          ) : prediction.match.isMatchFinished &&
+                            prediction.match.isMatchStarted &&
+                            prediction.match.isWined ? (
+                            <Alert severity="success">
+                              <AlertTitle>Felicidades ganaste!</AlertTitle>
+                              se sumaran a sus creditos la ganancia acordada.
+                              puede ver el detalle en el menu de transacciones.
+                            </Alert>
+                          ) : prediction.match.isMatchFinished &&
+                            prediction.match.isMatchStarted &&
+                            !prediction.match.isWined ? (
+                            <Alert severity="error">
+                              <AlertTitle>No acertaste</AlertTitle>
+                              esta vez no acertaste,mejor suerte para la
+                              proxima.
+                            </Alert>
+                          ) : null}
                           <p>
                             Tipo de apuesta: paga x{prediction.match.betOffer}
                           </p>
                           <p>
-                            {prediction.match.teamA} - {prediction.match.teamB}
+                            {prediction.match.teamA.name} -{" "}
+                            {prediction.match.teamB.name}
                           </p>
                           <div className="images-container">
                             <img
-                              src={prediction.match.teamAimage}
+                              src={prediction.match.teamA.teamImage}
                               alt="team-a"
                               className="team-image"
                             />
@@ -287,7 +334,7 @@ const Home = () => {
                               className="team-image"
                             />
                             <img
-                              src={prediction.match.teamBimage}
+                              src={prediction.match.teamB.teamImage}
                               alt="team-b"
                               className="team-image"
                             />

@@ -4,13 +4,13 @@ import "./login.css";
 import React from "react";
 import { useUserReducer } from "./reducer";
 
-const Login = () => {
+const LoginAdmin = () => {
   const { login, changeInputValue } = useUserReducer();
 
   return (
     <div className="login-container">
       <Box>
-        <h3 className="primary-title">Bienvenido!</h3>
+        <h3 className="primary-title">Administración</h3>
         <form
           className="form-container"
           onSubmit={(e) => {
@@ -42,11 +42,9 @@ const Login = () => {
           <Button type="submit" variant="contained">
             Login
           </Button>
-          <a href="/register" className="primary-title">
-            Registrarme
-          </a>
-          <a href="/login-admin" className="primary-title">
-            Soy admin
+
+          <a href="/login" className="primary-title">
+            Soy usuario
           </a>
         </form>
       </Box>
@@ -57,4 +55,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginAdmin;
