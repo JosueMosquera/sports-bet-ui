@@ -78,7 +78,7 @@ const MatchesAdmin = () => {
     handleCloseEditModal();
   };
 
-  return matches.length <= 0 ? (
+  return matches.length < 0 ? (
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
